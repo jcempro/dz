@@ -7,27 +7,30 @@
   <title>Calculadora de Dízimo e Oferta</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-    integrity="sha512-YcsIPaOQ8hV0vn7MLA+fXt6oNHQ0dy5xrvW5pX9FVAWLvlhxuXIB6wlUTyqRUUKqEEURMEe3iNRGMp1aCi3Yxw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+
+  <script src="assets/js/main.js" defer></script>
+  <link href="assets/css/main.css" rel="stylesheet" />
 </head>
 
 <body>
   <div class="container">
+    <input type="checkbox" id="autosave" class="autosave" checked />
+    <input type="checkbox" id="cfg" class="cfg" />
+
     <header>
       <h1>Calculadora de Dízimo e Oferta</h1>
       <div class="header-buttons">
-        <i class="fa fa-cog" onclick="alternarConfiguracoes()" title="Configurações"></i>
-        <i class="fa fa-save" onclick="salvarDados()" title="Salvar"></i>
-        <i class="fa fa-sync" onclick="toggleSalvarAutomatico()" title="Salvar Automático"></i>
-        <i class="fa fa-plus" onclick="adicionarCampo()" title="Adicionar campo"></i>
-        <button id="btnExportarPDF" title="Exportar para PDF">
-          <i class="fa fa-file-pdf"></i>
-        </button>
+        <label><i class="fa-solid fa-circle-plus add" title="Adicionar campo"></i></label>
+        <label class="save"><i class="fa fa-save save" title="Salvar"></i></label>
+        <label for="autosave" ><i class="fa fa-sync" title="Salvar Automático"></i></label>
+        <label><i class="fa-solid fa-file-pdf" id="btnExportarPDF"></i></label>
+        <label for="cfg"><i class="fa fa-cog" title="Configurações"></i></label>
       </div>
     </header>
 
-    <div class="config" id="config">
+    <div class="config">
       <label>
         <span>Percentual da Oferta (%)</span>
         <input type="number" id="oferta" min="0" max="75" value="2" />
@@ -59,7 +62,7 @@
           <td id="ofertaValor">R$ 0,00</td>
         </tr>
         <tr class="total-final">
-          <td>Total Final (Dízimo Corrigido + Oferta)</td>
+          <td>Total</td>
           <td id="totalFinal">R$ 0,00</td>
         </tr>
       </table>
