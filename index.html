@@ -1,170 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora de Dízimo e Oferta</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPaOQ8hV0vn7MLA+fXt6oNHQ0dy5xrvW5pX9FVAWLvlhxuXIB6wlUTyqRUUKqEEURMEe3iNRGMp1aCi3Yxw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <style>
-    :root {
-      font-size: 12px;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 1vh;
-    }
-
-    .container {
-      background: #fff;
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.05);
-      max-width: 95vw;
-      width: 100%;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    header h1 {
-      font-size: 1.2rem;
-      margin: 0;
-    }
-
-    .header-buttons i {
-      font-size: 1.2rem;
-      margin-left: 0.75rem;
-      cursor: pointer;
-      color: #007bff;
-    }
-
-    .config {
-      display: none;
-      margin-bottom: 0.75rem;
-    }
-
-    .config.visible {
-      display: block;
-    }
-
-    .config label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .config label span {
-      flex: 1 1 60%;
-      font-size: 0.9rem;
-    }
-
-    input[type="number"] {
-      width: 5rem;
-      padding: 0.2rem 0.4rem;
-      border: 1px solid #ccc;
-      border-radius: 0.4rem;
-      text-align: right;
-      font-size: 0.95rem;
-    }
-
-    .receita-item {
-      display: flex;
-      align-items: center;
-      padding: 0.4rem 0.6rem;
-      border: 1px solid #ddd;
-      border-radius: 0.5rem;
-      background-color: #fafafa;
-      margin-bottom: 0.5rem;
-      gap: 0.75rem;
-    }
-
-    .receita-item i {
-      color: #888;
-      min-width: 1.2rem;
-      text-align: center;
-    }
-
-    .label-edit {
-      flex: 1;
-      font-size: 0.85rem;
-      color: #666;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .label-edit.editing {
-      border: 1px dashed #007bff;
-      border-radius: 0.4rem;
-      background-color: #eef6ff;
-      padding: 0.1rem 0.3rem;
-    }
-
-    .receita-item input[type="text"] {
-      width: 6rem;
-      text-align: right;
-      border: none;
-      background: transparent;
-      font-size: 1rem;
-      color: #333;
-    }
-
-    .remove-btn {
-      color: #dc3545;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .resultado table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-    }
-
-    .resultado td {
-      padding: 0.35rem;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .resultado td:last-child {
-      text-align: right;
-    }
-
-    .total-final {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #007bff;
-    }
-
-    #soma {
-      font-weight: bold;
-      color: #28a745;
-    }
-
-    @media (max-width: 600px) {
-      .receita-item {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    integrity="sha512-YcsIPaOQ8hV0vn7MLA+fXt6oNHQ0dy5xrvW5pX9FVAWLvlhxuXIB6wlUTyqRUUKqEEURMEe3iNRGMp1aCi3Yxw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+
 <body>
   <div class="container">
     <header>
@@ -174,10 +21,9 @@
         <i class="fa fa-save" onclick="salvarDados()" title="Salvar"></i>
         <i class="fa fa-sync" onclick="toggleSalvarAutomatico()" title="Salvar Automático"></i>
         <i class="fa fa-plus" onclick="adicionarCampo()" title="Adicionar campo"></i>
-<button id="btnExportarPDF" title="Exportar para PDF">
-  <i class="fa fa-file-pdf"></i>
-</button>
-
+        <button id="btnExportarPDF" title="Exportar para PDF">
+          <i class="fa fa-file-pdf"></i>
+        </button>
       </div>
     </header>
 
@@ -196,145 +42,30 @@
 
     <div class="resultado">
       <table>
-        <tr><td>Somatório</td><td id="soma">R$ 0,00</td></tr>
-        <tr><td>Dízimo (10%)</td><td id="dizimo">R$ 0,00</td></tr>
-        <tr><td>Dízimo Corrigido</td><td id="dizimoCorrigido">R$ 0,00</td></tr>
-        <tr><td>Oferta</td><td id="ofertaValor">R$ 0,00</td></tr>
-        <tr class="total-final"><td>Total Final (Dízimo Corrigido + Oferta)</td><td id="totalFinal">R$ 0,00</td></tr>
+        <tr>
+          <td>Somatório</td>
+          <td id="soma">R$ 0,00</td>
+        </tr>
+        <tr>
+          <td>Dízimo (10%)</td>
+          <td id="dizimo">R$ 0,00</td>
+        </tr>
+        <tr>
+          <td>Dízimo Corrigido</td>
+          <td id="dizimoCorrigido">R$ 0,00</td>
+        </tr>
+        <tr>
+          <td>Oferta</td>
+          <td id="ofertaValor">R$ 0,00</td>
+        </tr>
+        <tr class="total-final">
+          <td>Total Final (Dízimo Corrigido + Oferta)</td>
+          <td id="totalFinal">R$ 0,00</td>
+        </tr>
       </table>
     </div>
   </div>
 
-  <script>
-    let salvarAuto = false;
-
-    const formatarMoeda = valor => Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-    const atualizarResultados = () => {
-      const valores = [...document.querySelectorAll('[data-valor]')].map(el => parseFloat(el.getAttribute('data-raw')) || 0);
-      const soma = valores.reduce((acc, v) => acc + v, 0);
-      const ofertaPct = Math.max(0, Math.min(75, parseFloat(document.getElementById('oferta').value) || 0));
-      const correcaoPct = Math.max(0, Math.min(10, parseFloat(document.getElementById('correcao').value) || 0));
-      const dizimo = soma * 0.10;
-      const dizimoCorrigido = dizimo * (1 + correcaoPct / 100);
-      const oferta = soma * (ofertaPct / 100);
-      const total = dizimoCorrigido + oferta;
-
-      document.getElementById('soma').textContent = formatarMoeda(soma);
-      document.getElementById('dizimo').textContent = formatarMoeda(dizimo);
-      document.getElementById('dizimoCorrigido').textContent = formatarMoeda(dizimoCorrigido);
-      document.getElementById('ofertaValor').textContent = formatarMoeda(oferta);
-      document.getElementById('totalFinal').textContent = formatarMoeda(total);
-
-      if (salvarAuto) salvarDados(false);
-    };
-
-    const formatarEAtualizar = e => {
-      let input = e.target;
-      let valor = input.value.replace(/[^\d]/g, '');
-      valor = (parseInt(valor || '0') / 100).toFixed(2);
-      input.setAttribute('data-raw', valor);
-      input.value = formatarMoeda(valor);
-      atualizarResultados();
-    };
-
-    const adicionarCampo = () => {
-      const nome = prompt("Informe o nome do novo campo de recebimento:", "Nova Receita") || 'Nova Receita';
-      const div = document.createElement('div');
-      div.className = 'receita-item';
-      div.innerHTML = `
-        <i class="fa fa-circle"></i>
-        <span class="label-edit" contenteditable="true">${nome}</span>
-        <input type="text" class="valor" data-valor data-raw="0" value="R$ 0,00" />
-        <i class="fa fa-minus remove-btn" onclick="removerCampo(this)"></i>
-      `;
-      div.querySelector('[data-valor]').addEventListener('input', formatarEAtualizar);
-      div.querySelector('.label-edit').addEventListener('focus', e => e.target.classList.add('editing'));
-      div.querySelector('.label-edit').addEventListener('blur', e => e.target.classList.remove('editing'));
-      document.getElementById('recebimentos').appendChild(div);
-    };
-
-    const removerCampo = (el) => {
-      el.closest('.receita-item').remove();
-      atualizarResultados();
-    };
-
-    const salvarDados = (mostrar = true) => {
-      const campos = [...document.querySelectorAll('#recebimentos .receita-item')].map(item => ({
-        nome: item.querySelector('.label-edit').textContent.trim(),
-        valor: parseFloat(item.querySelector('[data-valor]').getAttribute('data-raw')) || 0
-      }));
-
-      const dados = {
-        campos,
-        oferta: parseFloat(document.getElementById('oferta').value) || 0,
-        correcao: parseFloat(document.getElementById('correcao').value) || 0
-      };
-
-      localStorage.setItem('dizimoDados', JSON.stringify(dados));
-      if (mostrar) alert('Dados salvos com sucesso.');
-    };
-
-    const carregarDados = () => {
-      const dados = JSON.parse(localStorage.getItem('dizimoDados'));
-      if (!dados || !dados.campos) {
-        alert('Nenhum dado salvo encontrado.');
-        return;
-      }
-
-      document.getElementById('recebimentos').innerHTML = '';
-      dados.campos.forEach(({ nome, valor }) => {
-        const div = document.createElement('div');
-        div.className = 'receita-item';
-        div.innerHTML = `
-          <i class="fa fa-circle"></i>
-          <span class="label-edit" contenteditable="true">${nome}</span>
-          <input type="text" class="valor" data-valor data-raw="${valor}" value="${formatarMoeda(valor)}" />
-          <i class="fa fa-minus remove-btn" onclick="removerCampo(this)"></i>
-        `;
-        div.querySelector('[data-valor]').addEventListener('input', formatarEAtualizar);
-        div.querySelector('.label-edit').addEventListener('focus', e => e.target.classList.add('editing'));
-        div.querySelector('.label-edit').addEventListener('blur', e => e.target.classList.remove('editing'));
-        document.getElementById('recebimentos').appendChild(div);
-      });
-
-      document.getElementById('oferta').value = dados.oferta;
-      document.getElementById('correcao').value = dados.correcao;
-      atualizarResultados();
-    };
-
-    const toggleSalvarAutomatico = () => {
-      salvarAuto = !salvarAuto;
-      alert('Salvar automático ' + (salvarAuto ? 'ativado' : 'desativado'));
-    };
-
-    const alternarConfiguracoes = () => {
-      document.getElementById('config').classList.toggle('visible');
-    };
-
-    document.getElementById('oferta').addEventListener('input', atualizarResultados);
-    document.getElementById('correcao').addEventListener('input', atualizarResultados);
-
-    window.onload = () => {
-      carregarDados();
-    };
-  </script>
-<script>
-  document.getElementById('btnExportarPDF').addEventListener('click', () => {
-    const opt = {
-      margin:       0.5,
-      filename:     'dizimo-oferta.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'cm', format: 'a5', orientation: 'portrait' },
-      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-
-    const elemento = document.querySelector('.container');
-
-    html2pdf().set(opt).from(elemento).save();
-  });
-</script>
-
 </body>
+
 </html>
