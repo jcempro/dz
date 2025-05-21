@@ -19,31 +19,53 @@
   });
 
   const atualizarResultados = () => {
+    // Pega os valores numéricos limpos do atributo data-raw de cada input com data-valor
     const valores = [...$('[data-valor]')].map(el => parseFloat(el.getAttribute('data-raw')) || 0);
 
+    // Soma dos valores limpos
     const soma = valores.reduce((acc, v) => acc + v, 0);
-    const ofertaPct = Math.max(0, Math.min(75, parseFloat($('#oferta').value) || 0));
-    const correcaoPct = Math.max(0, Math.min(10, parseFloat($('#correcao').value) || 0));
+
+    // Para oferta e correção, pegar do input correspondente (inputs de texto)
+    // com parseFloat no data-raw para evitar problemas de vírgula
+    const ofertaPct = Math.max(0, Math.min(75, parseFloat($('#oferta')[0].getAttribute('data-raw')) || 0));
+    const correcaoPct = Math.max(0, Math.min(10, parseFloat($('#correcao')[0].getAttribute('data-raw')) || 0));
+
+    // Cálculos:
     const dizimo = soma * 0.10;
-    const dizimoCorrigido = dizimo * (1 + correcaoPct / 100);
-    const oferta = soma * (ofertaPct / 100);
+    // dizimo corrigido = dizimo acrescido da porcentagem de correção
+    const dizimoCorrigido = dizimo * (1 + correcaoPct);
+    // oferta é percentual de soma
+    const oferta = soma * ofertaPct;
     const total = dizimoCorrigido + oferta;
 
+    // Atualiza os campos de resultado, formatando os valores
     $('#soma')[0].textContent = formatarMoeda(soma);
     $('#dizimo')[0].textContent = formatarMoeda(dizimo);
     $('#dizimoCorrigido')[0].textContent = formatarMoeda(dizimoCorrigido);
     $('#ofertaValor')[0].textContent = formatarMoeda(oferta);
     $('#totalFinal')[0].textContent = formatarMoeda(total);
 
+    // Se autosave estiver ativo, salva os dados
     if ($('#autosave')[0].checked) salvarDados(false);
   };
 
+
   const formatarEAtualizar = e => {
     let input = e.target;
-    let valor = input.value.replace(/[^\d]/g, '');
-    valor = (parseInt(valor || '0') / 100).toFixed(2);
-    input.setAttribute('data-raw', valor);
-    input.value = (input.hasAttribute('data-percent') ? formatarPorcentagem : formatarMoeda)(valor);
+    let valorStr = input.value.replace(/[^\d]/g, '') || '0';
+    let valorDecimal;
+
+    if (input.hasAttribute('data-percent')) {
+      // valor em decimal, ex: '2' vira 0.02
+      valorDecimal = (parseInt(valorStr) / 100).toFixed(4);
+      input.setAttribute('data-raw', valorDecimal);
+      input.value = formatarPorcentagem(valorDecimal);
+    } else {
+      valorDecimal = (parseInt(valorStr) / 100).toFixed(2);
+      input.setAttribute('data-raw', valorDecimal);
+      input.value = formatarMoeda(valorDecimal);
+    }
+
     atualizarResultados();
   };
 
@@ -84,10 +106,13 @@
       valor: parseFloat(item.$('[data-valor]')[0].getAttribute('data-raw')) || 0
     }));
 
+    const ofertaRaw = parseFloat($('#oferta')[0].getAttribute('data-raw')) || 0;
+    const correcaoRaw = parseFloat($('#correcao')[0].getAttribute('data-raw')) || 0;
+
     const dados = {
       campos,
-      oferta: parseFloat($('#oferta')[0].value) || 0,
-      correcao: parseFloat($('#correcao')[0].value) || 0,
+      oferta: ofertaRaw,
+      correcao: correcaoRaw,
       autosave: $('#autosave')[0].checked
     };
 
@@ -107,18 +132,23 @@
       adicionarCampo(nome, valor);
     });
 
-    $('#oferta')[0].value = dados.oferta;
-    $('#correcao')[0].value = dados.correcao;
+    // oferta e correcao são decimais salvos, ex: 0.02 para 2%
+    $('#oferta')[0].setAttribute('data-raw', dados.oferta ?? 0);
+    $('#oferta')[0].value = formatarPorcentagem(dados.oferta ?? 0);
+
+    $('#correcao')[0].setAttribute('data-raw', dados.correcao ?? 0);
+    $('#correcao')[0].value = formatarPorcentagem(dados.correcao ?? 0);
+
     $('#autosave')[0].checked = !!dados.autosave;
 
     atualizarResultados();
   };
 
-  $('#oferta')[0].on('input', atualizarResultados);
-  $('#correcao')[0].on('input', atualizarResultados);
-
   window.onload = () => {
     carregarDados();
+
+    $('#oferta')[0].on('input', formatarPercentInput);
+    $('#correcao')[0].on('input', formatarPercentInput);
   };
 
   $('#btnExportarPDF')[0].on('click', () => {
@@ -175,6 +205,15 @@
     atualizarResultados();
   });
 
+  const formatarPercentInput = e => {
+    let input = e.target;
+    let valorStr = input.value.replace(/[^\d]/g, '') || '0';
+    let valorDecimal = (parseInt(valorStr) / 100).toFixed(4);
+    input.setAttribute('data-raw', valorDecimal);
+    input.value = formatarPorcentagem(valorDecimal);
+    atualizarResultados();
+  };
+
   $('.config label input').forEach(e => {
     e.on('blur', formatarPorcentagem);
   });
@@ -184,7 +223,7 @@
   $('[contenteditable="true"]').forEach(el => {
     el.on('input', atualizarResultados);
   });
-  
+
   $('[contenteditable="true"]').forEach(el => {
     el.on('blur', atualizarResultados);
   });
