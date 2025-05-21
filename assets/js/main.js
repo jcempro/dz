@@ -155,7 +155,7 @@
     // Extrai e sanitiza o nome do arquivo
     const titulo = (document.querySelector('header h1')?.textContent || 'resumo')
       .trim()
-      .replace(/[\/\\:*?"<>|]/g, '')     // Remove caracteres inválidos
+      .replace(/[\/\\:*?"<>|]/g, '-')     // Remove caracteres inválidos
       .replace(/\s+/g, '_')              // Substitui espaços por _
       .slice(0, 100);                    // Limita o tamanho para segurança
 
