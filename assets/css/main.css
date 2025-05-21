@@ -23,7 +23,7 @@ body {
   width: 100%;
 }
 
-input[type='checkbox']{
+input[type='checkbox'] {
   opacity: 0;
   position: fixed;
   left: -10vw;
@@ -31,18 +31,35 @@ input[type='checkbox']{
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
   margin-bottom: 1rem;
 }
 
+header>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.3rem;
+}
+
 header h1 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin: 0;
 }
 
-.header-buttons, .header-buttons *{
+header h2 {
+  font-size: 1rem;
+  margin: 0;
+  color: #999;
+  border-bottom: 1px solid #bbb;
+}
+
+hr {
+  height: .1em;
+}
+
+.header-buttons,
+.header-buttons * {
   line-height: 1.2em;
 }
 
@@ -54,11 +71,11 @@ header h1 {
   opacity: .5;
 }
 
-.header-buttons i:hover{
+.header-buttons i:hover {
   opacity: 1;
 }
 
-.header-buttons i.add {  
+.header-buttons i.add {
   color: green;
 }
 
@@ -76,17 +93,9 @@ header h1 {
 }
 
 .config label span {
-  flex: 1 1 60%;
+  flex: 1 1 50%;
   font-size: 0.9rem;
-}
-
-input[type="number"] {
-  width: 5rem;
-  padding: 0.2rem 0.4rem;
-  border: 1px solid #ccc;
-  border-radius: 0.4rem;
-  text-align: right;
-  font-size: 0.95rem;
+  max-width: 50%;
 }
 
 .receita-item {
@@ -123,6 +132,7 @@ input[type="number"] {
 
 .receita-item input[type="text"] {
   width: 6rem;
+  min-width: 50%;
   text-align: right;
   border: none;
   background: transparent;
@@ -141,15 +151,32 @@ input[type="number"] {
   opacity: 1;
 }
 
+.resultado {
+  margin-top: 1em
+}
+
 .resultado table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: 0.9rem;  
 }
 
 .resultado td {
   padding: 0.35rem;
   border-bottom: 1px solid #ccc;
+}
+
+tr.dz_normal td {
+  font-size: .9rem;
+}
+
+tr.dz_normal~tr td {
+  background: #eee;  
+}
+
+tr:last-of-type td {
+  background: #fff !important;
+  border-bottom: none;
 }
 
 .resultado td:last-child {
@@ -175,18 +202,18 @@ input[type="number"] {
   }
 }
 
-input.cfg:checked ~ .config {
+input.cfg:checked~.config {
   display: block !important;
 }
 
-input.cfg:checked ~ header *[for="cfg"] i:before {
+input.cfg:checked~header *[for="cfg"] i:before {
   content: '\f00d'
 }
 
-input.autosave:checked ~ header *[for="autosave"] i {
+input.autosave:checked~header *[for="autosave"] i {
   color: orangered;
 }
 
-input.autosave:checked ~ header label.save {
+input.autosave:checked~header label.save {
   display: none;
 }

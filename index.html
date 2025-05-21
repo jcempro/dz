@@ -5,6 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora de Dízimo e Oferta</title>
+
+  <script>
+    if ((location.protocol !== 'https:') && (location.protocol !== 'file:')) {
+      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }    
+  </script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous"
@@ -16,28 +23,31 @@
 
 <body>
   <div class="container">
-    <input type="checkbox" id="autosave" class="autosave" checked />
+    <input type="checkbox" id="autosave" class="autosave" />
     <input type="checkbox" id="cfg" class="cfg" />
 
     <header>
-      <h1>Calculadora de Dízimo e Oferta</h1>
-      <div class="header-buttons">
-        <label><i class="fa-solid fa-circle-plus add" title="Adicionar campo"></i></label>
-        <label class="save"><i class="fa fa-save save" title="Salvar"></i></label>
-        <label for="autosave" ><i class="fa fa-sync" title="Salvar Automático"></i></label>
-        <label><i class="fa-solid fa-file-pdf" id="btnExportarPDF"></i></label>
-        <label for="cfg"><i class="fa fa-cog" title="Configurações"></i></label>
-      </div>
+      <h2>Calculadora de Dízimo e Oferta</h2>
+      <div>
+        <h1 contenteditable="true">Referência</h1>
+        <div class="header-buttons noprint">
+          <label><i class="fa-solid fa-circle-plus add" title="Adicionar campo"></i></label>
+          <label><i class="fa-solid fa-eraser clear" title="limpar"></i></label>
+          <label class="save"><i class="fa fa-save save" title="Salvar"></i></label>
+          <label for="autosave"><i class="fa fa-sync" title="Salvar Automático"></i></label>
+          <label><i class="fa-solid fa-file-arrow-down" id="btnExportarPDF"></i></label>
+          <label for="cfg"><i class="fa fa-cog" title="Configurações"></i></label>
+        </div>
     </header>
 
     <div class="config">
       <label>
         <span>Percentual da Oferta (%)</span>
-        <input type="number" id="oferta" min="0" max="75" value="2" />
+        <input type="text" data-percent id="oferta" class="valor" min="0" max="75" data-default="2" value="2" />
       </label>
       <label>
         <span>Correção do Dízimo (%)</span>
-        <input type="number" id="correcao" min="0" max="10" value="1" />
+        <input type="text" data-percent id="correcao" class='valor' min="0" max="10" data-default="1" value="1" />
       </label>
     </div>
 
@@ -49,7 +59,7 @@
           <td>Somatório</td>
           <td id="soma">R$ 0,00</td>
         </tr>
-        <tr>
+        <tr class="dz_normal">
           <td>Dízimo (10%)</td>
           <td id="dizimo">R$ 0,00</td>
         </tr>
