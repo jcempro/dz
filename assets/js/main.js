@@ -49,11 +49,6 @@
     if ($('#autosave')[0].checked) salvarDados(false);
   };
 
-  const factory = ()=>{
-    localStorage.setItem('dizimoDados', JSON.stringify(null));
-    window.location.reload();
-  }
-
   const formatarEAtualizar = e => {
     let input = e.target;
     let valorStr = input.value.replace(/[^\d]/g, '') || '0';
@@ -190,10 +185,17 @@
 
   adicionarCampo(["Proventos", "Acertos", "Alimentação", "Refeição", "Aluguel"]);
 
-  $('.header-buttons .factory')[0].on('click', factory);
+  $('.header-buttons .factory')[0].on('click', ()=>{
+    if (!confirm("Isto apagará completamente todos os valores, incluindo itens existes, para o modelo de fábrica. Quer continuar?")) return;
+    console.log("Salvando dados...");
+    localStorage.setItem('dizimoDados', JSON.stringify(null));
+    window.location.reload();
+  });
   $('.header-buttons .add')[0].on('click', adicionarCampo);
   $('.header-buttons .save')[0].on('click', salvarDados);
   $('.header-buttons .clear')[0].on('click', () => {
+    if (!confirm("Isto zerará todos os valores já preenchidos. Quer continuar?")) return;
+    console.log("Salvando dados...");
     $('input').forEach(input => {
       if (input.type === 'checkbox') {
         return;
