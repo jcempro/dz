@@ -65,7 +65,7 @@ hr {
 
 .header-buttons i {
   font-size: 1.5rem;
-  margin-left: 0.3rem;
+  margin-left: 0.15rem;
   cursor: pointer;
   color: #333;
   opacity: .5;
@@ -78,6 +78,11 @@ hr {
 .header-buttons i.add {
   color: green;
 }
+
+.header-buttons i.margen {
+  margin-left: .30em;
+}
+
 
 .config {
   display: none;
