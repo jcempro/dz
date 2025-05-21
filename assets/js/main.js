@@ -49,6 +49,10 @@
     if ($('#autosave')[0].checked) salvarDados(false);
   };
 
+  const factory = ()=>{
+    localStorage.setItem('dizimoDados', JSON.stringify(null));
+    window.location.reload();
+  }
 
   const formatarEAtualizar = e => {
     let input = e.target;
@@ -186,6 +190,7 @@
 
   adicionarCampo(["Proventos", "Acertos", "Alimentação", "Refeição", "Aluguel"]);
 
+  $('.header-buttons .factory')[0].on('click', factory);
   $('.header-buttons .add')[0].on('click', adicionarCampo);
   $('.header-buttons .save')[0].on('click', salvarDados);
   $('.header-buttons .clear')[0].on('click', () => {
